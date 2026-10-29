@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="sk">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Časová os vo funkcii riaditeľa školy</title>
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="description" content="Časová os vo funkcii riaditeľa školy od zastupovania riaditeľa až po 5-ročné funkčné obdobie riaditeľa školy.">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="wrap">
+    <header class="hero">
+      <h1>Časová os vo funkcii riaditeľa školy</h1>
+    </header>
+
+    <section class="stats" id="stats" aria-label="Súhrn"></section>
+
+    <section class="card overview" aria-labelledby="overview-title">
+      <h2 id="overview-title">Prehľad</h2>
+      <div class="bar" id="bar" role="img" aria-label="Proporcionálna časová os všetkých období"></div>
+      <div class="axis" id="axis" aria-hidden="true"></div>
+      <ul class="legend" id="legend"></ul>
+    </section>
+
+    <section aria-labelledby="detail-title">
+      <h2 id="detail-title" class="section-title">Podrobne</h2>
+      <ol class="timeline" id="timeline"></ol>
+    </section>
+
+    <footer class="footer">
+      <p>Stav k <span id="today"></span></p>
+    </footer>
+  </main>
+
+  <script src="data.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>

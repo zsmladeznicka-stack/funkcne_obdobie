@@ -1,0 +1,324 @@
+:root {
+  --bg: #f6f5f1;
+  --surface: #ffffff;
+  --text: #1d1d1b;
+  --muted: #6b6a65;
+  --line: #e3e1da;
+  --track: #ecebe5;
+  --amber: #c9861a;
+  --blue: #2f6fcf;
+  --green: #2e8b57;
+  --event: #c0392b;
+  --today: #1d1d1b;
+  --shadow: 0 1px 2px rgba(0, 0, 0, 0.04), 0 4px 16px rgba(0, 0, 0, 0.04);
+  color-scheme: light dark;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #151513;
+    --surface: #1f1f1c;
+    --text: #ecebe6;
+    --muted: #a19f97;
+    --line: #34332e;
+    --track: #2a2925;
+    --amber: #e0a23e;
+    --blue: #6a9cf0;
+    --green: #4fb17a;
+    --event: #e8665a;
+    --today: #ecebe6;
+    --shadow: none;
+  }
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font: 16px/1.55 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+.wrap {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 48px 16px 32px;
+}
+
+h1, h2, h3 { line-height: 1.2; margin: 0; }
+
+.hero { margin-bottom: 28px; }
+.hero h1 { font-size: clamp(28px, 5vw, 40px); letter-spacing: -0.02em; }
+
+.muted { color: var(--muted); }
+
+/* --- Súhrn --- */
+.stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin-bottom: 16px;
+}
+.stat {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  box-shadow: var(--shadow);
+}
+.stat-label { font-size: 13px; color: var(--muted); }
+.stat-value { font-size: 28px; font-weight: 700; font-variant-numeric: tabular-nums; letter-spacing: -0.01em; }
+.stat-sub { font-size: 13px; color: var(--muted); }
+.stat-extra { font-size: 14px; font-weight: 500; color: var(--muted); letter-spacing: 0; }
+.meter, .year-meter {
+  display: block;
+  height: 6px;
+  border-radius: 99px;
+  background: var(--track);
+  overflow: hidden;
+  margin-top: 6px;
+}
+.meter > span, .year-meter > span {
+  display: block;
+  height: 100%;
+  background: var(--green);
+  border-radius: inherit;
+}
+
+/* --- Prehľad --- */
+.card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 20px;
+  box-shadow: var(--shadow);
+  margin-bottom: 40px;
+}
+.overview h2 { font-size: 16px; margin-bottom: 36px; }
+
+.bar {
+  position: relative;
+  height: 28px;
+  border-radius: 8px;
+  background: var(--track);
+}
+.seg {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  border-right: 2px solid var(--surface);
+}
+.seg:first-of-type { border-radius: 8px 0 0 8px; }
+.seg:last-of-type { border-radius: 0 8px 8px 0; border-right: 0; }
+.seg.c-amber { background: var(--amber); }
+.seg.c-blue { background: var(--blue); }
+.seg.c-green { background: var(--green); }
+.seg-split {
+  position: absolute;
+  top: 6px;
+  bottom: 6px;
+  width: 1px;
+  background: rgba(255, 255, 255, 0.55);
+}
+.event-dot {
+  position: absolute;
+  top: 50%;
+  width: 12px;
+  height: 12px;
+  margin: -6px 0 0 -6px;
+  border-radius: 50%;
+  background: var(--event);
+  border: 2px solid var(--surface);
+  z-index: 2;
+}
+.today-line {
+  position: absolute;
+  top: -8px;
+  bottom: -8px;
+  width: 2px;
+  margin-left: -1px;
+  background: var(--today);
+  z-index: 3;
+}
+.today-flag {
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  margin-bottom: 4px;
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+  padding: 1px 8px;
+  border-radius: 99px;
+  background: var(--today);
+  color: var(--bg);
+}
+
+.axis {
+  position: relative;
+  height: 22px;
+  margin-top: 6px;
+  font-size: 12px;
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+}
+.tick {
+  position: absolute;
+  transform: translateX(-50%);
+  padding-top: 6px;
+}
+.tick::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 50%;
+  height: 4px;
+  width: 1px;
+  background: var(--line);
+}
+
+.legend {
+  list-style: none;
+  padding: 16px 0 0;
+  margin: 12px 0 0;
+  border-top: 1px solid var(--line);
+  display: grid;
+  gap: 8px;
+  font-size: 14px;
+}
+.legend li { display: flex; align-items: baseline; gap: 10px; }
+.legend .sw { transform: translateY(1px); }
+.nowrap { white-space: nowrap; }
+.sw { width: 12px; height: 12px; border-radius: 3px; flex: none; }
+.sw.c-amber { background: var(--amber); }
+.sw.c-blue { background: var(--blue); }
+.sw.c-green { background: var(--green); }
+.sw-event { background: var(--event); border-radius: 50%; }
+
+/* --- Podrobná časová os --- */
+.section-title { font-size: 22px; margin-bottom: 20px; }
+
+.timeline {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  position: relative;
+}
+.timeline::before {
+  content: "";
+  position: absolute;
+  left: 9px;
+  top: 8px;
+  bottom: 8px;
+  width: 2px;
+  background: var(--line);
+}
+
+.item {
+  position: relative;
+  padding-left: 40px;
+  margin-bottom: 20px;
+  --accent: var(--muted);
+}
+.item.c-amber { --accent: var(--amber); }
+.item.c-blue { --accent: var(--blue); }
+.item.c-green { --accent: var(--green); }
+.item-event { --accent: var(--event); }
+
+.node {
+  position: absolute;
+  left: 2px;
+  top: 22px;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--surface);
+  border: 3px solid var(--accent);
+}
+.item.prebieha .node { background: var(--accent); box-shadow: 0 0 0 4px color-mix(in srgb, var(--accent) 25%, transparent); }
+.item-event .node { background: var(--accent); }
+
+.item-body {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-left: 4px solid var(--accent);
+  border-radius: 12px;
+  padding: 16px 18px;
+  box-shadow: var(--shadow);
+}
+.item-event .item-body { border-left-width: 1px; border-style: dashed; border-color: var(--line); }
+
+.item-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.date { font-size: 14px; color: var(--muted); font-weight: 500; }
+.item h3 { font-size: 19px; margin: 4px 0 6px; }
+.item p { margin: 0; }
+.meta { margin-top: 10px !important; font-size: 14px; color: var(--muted); display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+.chip {
+  font-size: 12px;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 99px;
+  color: var(--accent);
+  background: color-mix(in srgb, var(--accent) 14%, transparent);
+}
+
+.badge {
+  font-size: 12px;
+  font-weight: 600;
+  padding: 2px 10px;
+  border-radius: 99px;
+  border: 1px solid var(--line);
+  color: var(--muted);
+}
+.badge.prebieha { color: var(--surface); background: var(--accent); border-color: var(--accent); }
+
+/* Školské roky v rámci funkčného obdobia */
+.years {
+  list-style: none;
+  margin: 16px 0 0;
+  padding: 12px 0 0;
+  border-top: 1px solid var(--line);
+  display: grid;
+  gap: 10px;
+}
+.year {
+  display: grid;
+  grid-template-columns: 52px 1fr 120px 92px;
+  align-items: center;
+  gap: 12px;
+  font-size: 14px;
+}
+.year-n { font-weight: 600; color: var(--accent); font-variant-numeric: tabular-nums; }
+.year-meter { margin: 0; }
+.year-meter > span { background: var(--accent); }
+.year-state { text-align: right; color: var(--muted); font-variant-numeric: tabular-nums; }
+.year.prebieha .year-state { color: var(--accent); font-weight: 600; }
+.year.buduce .year-name { color: var(--muted); }
+
+.footer { margin-top: 32px; font-size: 13px; color: var(--muted); text-align: center; }
+
+@media (max-width: 600px) {
+  .wrap { padding-top: 32px; }
+  .stats { grid-template-columns: 1fr; }
+  .stat { flex-direction: row; flex-wrap: wrap; align-items: baseline; column-gap: 10px; }
+  .stat-label { width: 100%; }
+  .stat-value { font-size: 24px; }
+  .meter { width: 100%; }
+  .card { padding: 16px; }
+  .year { grid-template-columns: 44px 1fr 72px; }
+  .year-prefix { display: none; }
+  .year-meter { grid-column: 2 / 4; grid-row: 2; }
+  .tick:nth-child(even) { display: none; }
+}
